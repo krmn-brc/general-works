@@ -6,6 +6,7 @@
 # dotenv files
 .env
 foody2-1.0.0
+kaiadmin-lite-1.2.0
 # User-specific files
 *.rsuser
 *.suo
