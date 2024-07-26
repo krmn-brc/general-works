@@ -1,7 +1,19 @@
+using Foody.Business.Abstract;
+using Foody.Business.Concrete;
+using Foody.DataAccess.Abstract;
+using Foody.DataAccess.Context;
+using Foody.DataAccess.EntityFramework;
+using Foody.Entities.Concrete;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<FoodyContext>();
+builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
+builder.Services.AddScoped<ICategoryService, CategoryManger>();
 
 var app = builder.Build();
 
@@ -19,6 +31,17 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints => 
+{
+    
+    endpoints.MapControllerRoute(
+        name:"default",
+        pattern:"{controller=Home}/{action=Index}/{id?}"
+    );
+    endpoints.MapRazorPages();
+    endpoints.MapControllers();
+});
 
 app.MapRazorPages();
 
